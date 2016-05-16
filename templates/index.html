@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <h2>Routester</h2>
+    <h3><i>Share your location</i></h2>
+  </div>
+  <div class="row">
+    <h3>How does it work?</h3>
+  </div>
+  <div class="row">
+    <div class="col">
+      <ol>
+	<li>
+	  Click on "<i>Share your location</i>" and accept the browser's permission prompt to enable location sharing.
+	</li>
+	<li>
+	  Add a nickname to help identify yourself to your friends.
+	</li>
+	<li>
+	  Share the unique URL with your collaborators (friends/family) and also view their location in real time.
+	</li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <p><a class="loc_btn" href="/new">Share your location</a></p>
+  </div>
+  <div class="row">
+    <p><strong>Note:</strong> Location data is cleared after 1 hour of inactivity.</p>
+    <p>&copy; 2016, Thejaswi Puthraya | Source available on <a href="https://github.com/theju/goroutes">Github</a></p>
+  </div>
+</div>
+{% endblock %}

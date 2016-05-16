@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="map"></div>
+<div id="refresh">
+  <button>Refresh</button>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.1/js.cookie.min.js"></script>
+<script type="text/javascript" src="/static/js/routester.js"></script>
+{% endblock %}

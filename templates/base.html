@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <title>Routester</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" type="text/css" media="screen" />
+      <link rel="stylesheet" href="/static/css/style.css" type="text/css" media="screen" />
+    {% block extra_css %}
+    {% endblock %}
+  </head>
+  <body>
+    {% block content %}
+    {% endblock %}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+    {% block extra_js %}
+    {% endblock %}
+  </body>
+</html>
