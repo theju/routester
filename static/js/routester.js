@@ -15,19 +15,6 @@ $(function() {
 	return text;
     }
 
-    var nick = Cookies.get('nick'), sid = Cookies.get('sid');
-    if (!nick) {
-	nick = prompt("Enter a nickname:");
-	if (!nick) {
-	    nick = randomStr(4);
-	}
-	Cookies.set('nick', nick.toLowerCase());
-    }
-    if (!sid) {
-	sid = randomStr(4);
-	Cookies.set('sid', sid);
-    }
-
     function fetchLocation() {
 	$.ajax({
 	    url: window.location.pathname,
@@ -88,16 +75,39 @@ $(function() {
 	});
     }
 
+    function geoError(ev) {
+	alert("Error: " + ev.message);
+    }
+
+    navigator.geolocation.getCurrentPosition(function(loc) {
+	var nick = Cookies.get('nick'), sid = Cookies.get('sid');
+	if (!nick) {
+	    nick = prompt("Enter a nickname:");
+	    if (!nick) {
+		nick = randomStr(4);
+	    }
+	    Cookies.set('nick', nick.toLowerCase());
+	}
+	if (!sid) {
+	    sid = randomStr(4);
+	    Cookies.set('sid', sid);
+	}
+
+	var lat = loc.coords.latitude;
+	var lng = loc.coords.longitude;
+	updateLocation(lat, lng);
+    }, geoError, {
+	timeout: 10000
+    });
+
     var watchID = navigator.geolocation.watchPosition(function(loc) {
 	var lat = loc.coords.latitude;
 	var lng = loc.coords.longitude;
 
 	updateLocation(lat, lng);
-    }, function(ev) {
-	alert("Error: " + ev.message);
-    }, {
+    }, geoError, {
 	enableHighAccuracy: true,
-	timeout: 10000,
+	timeout: 30000,
 	maximumAge: 120000
     });
 
