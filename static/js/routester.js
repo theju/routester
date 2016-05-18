@@ -1,5 +1,8 @@
 $(function() {
+    var nick = Cookies.get('nick'), sid = Cookies.get('sid'), watchID;
+
     $("#map").css("height", document.documentElement.clientHeight);
+
     var map = L.map('map');
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -20,8 +23,15 @@ $(function() {
 	    url: window.location.pathname,
 	    type: "GET",
 	    success: function(data, status, jqXHR) {
-		var track = data.track;
+		$("#refresh button").html("Refresh");
+	    	var track = data.track;
 		updateMap(track);
+	    },
+	    error: function(jqXHR, status, error) {
+		$("#refresh button").html("Error");
+		setTimeout(function() {
+		    $("#refresh button").html("Refresh");
+		}, 5000);
 	    }
 	});
     }
@@ -51,7 +61,6 @@ $(function() {
 	    }
 	});
 	layerGroup.addTo(map);
-	map.fitBounds([ markerLocs ]);
     }
 
     function updateLocation(lat, lng) {
@@ -79,7 +88,6 @@ $(function() {
 	alert("Error: " + ev.message);
     }
 
-    var nick = Cookies.get('nick'), sid = Cookies.get('sid');
     navigator.geolocation.getCurrentPosition(function(loc) {
 	if (!nick) {
 	    nick = prompt("Enter a nickname:");
@@ -96,22 +104,23 @@ $(function() {
 	var lat = loc.coords.latitude;
 	var lng = loc.coords.longitude;
 	updateLocation(lat, lng);
+
+	watchID = navigator.geolocation.watchPosition(function(loc) {
+	    var lat = loc.coords.latitude;
+	    var lng = loc.coords.longitude;
+	    updateLocation(lat, lng);
+	}, geoError, {
+	    enableHighAccuracy: true,
+	    timeout: 30000,
+	    maximumAge: 120000
+	});
+
     }, geoError, {
 	timeout: 10000
     });
 
-    var watchID = navigator.geolocation.watchPosition(function(loc) {
-	var lat = loc.coords.latitude;
-	var lng = loc.coords.longitude;
-
-	updateLocation(lat, lng);
-    }, geoError, {
-	enableHighAccuracy: true,
-	timeout: 30000,
-	maximumAge: 120000
-    });
-
     $("#refresh button").on("click", function() {
+	$(this).html("Refreshing...");
 	fetchLocation();
     });
 });
