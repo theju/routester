@@ -79,8 +79,8 @@ $(function() {
 	alert("Error: " + ev.message);
     }
 
+    var nick = Cookies.get('nick'), sid = Cookies.get('sid');
     navigator.geolocation.getCurrentPosition(function(loc) {
-	var nick = Cookies.get('nick'), sid = Cookies.get('sid');
 	if (!nick) {
 	    nick = prompt("Enter a nickname:");
 	    if (!nick) {
