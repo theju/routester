@@ -44,6 +44,10 @@ def track(track_id):
         client.expireat(track_id, curr_time + 3600)
         track = client.hgetall(track_id)
     if request.is_xhr:
+        track = dict([(
+            ii.decode("utf-8"),
+            jj.decode("utf-8")
+        ) for ii, jj in track.items()])
         return jsonify(track=track)
     return render_template("track.html", track=track)
 
