@@ -111,12 +111,12 @@ $(function() {
 	    updateLocation(lat, lng);
 	}, geoError, {
 	    enableHighAccuracy: true,
-	    timeout: 30000,
-	    maximumAge: 120000
+	    timeout: 180000
 	});
 
     }, geoError, {
-	timeout: 10000
+	timeout: 30000,
+	maximumAge: 1800000
     });
 
     $("#refresh button").on("click", function() {
